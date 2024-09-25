@@ -2,10 +2,10 @@
 
 Adding dark mode to your Svelte app is that easy, made by [`um-dev`](https://urmoov.dev).
 
-A single page switch that handles dark and light themes, optional device synchronization wherever you put it in your Svelte app.
-Allows you to customize dozens of default colors and their respective CSS property names to the ones you already use in your project!
-You can also add completely different custom colors and/or any other global CSS properties you'd like to change whenever your theme switches.
-It sets a smooth color transition between themes and follows the system dark mode preferences dynamically.
+A single page switch component with no dependecies can be added anywhere in your Svelte app and handles dark and light themes smoothly with optional reactive device synchronization and smooth transitions.
+Allows you to customize dozens of default colors and their respective CSS property names if you already use some in your project!
+You can also add completely different custom colors and/or any other global CSS properties you'd like to change whenever your theme switches. You can even disable the default options if you'd prefer
+
 
 ## Usage
 
