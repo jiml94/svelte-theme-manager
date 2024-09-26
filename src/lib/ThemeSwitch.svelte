@@ -1,5 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import {themeStore} from "./stores.js"
+
+    $: ({useSystemTheme, darkMode} = $themeStore)
+
     export let fontSize:string = "0.6rem"
     export let padding:string = `calc(${fontSize} / 3)`
     $: faIcons = {
@@ -13,13 +17,13 @@
         faMoon: `<svg fill="var(--color-text)" xmlns="http://www.w3.org/2000/svg" height=${fontSize} viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M144.7 98.7c-21 34.1-33.1 74.3-33.1 117.3c0 98 62.8 181.4 150.4 211.7c-12.4 2.8-25.3 4.3-38.6 4.3C126.6 432 48 353.3 48 256c0-68.9 39.4-128.4 96.8-157.3zm62.1-66C91.1 41.2 0 137.9 0 256C0 379.7 100 480 223.5 480c47.8 0 92-15 128.4-40.6c1.9-1.3 3.7-2.7 5.5-4c4.8-3.6 9.4-7.4 13.9-11.4c2.7-2.4 5.3-4.8 7.9-7.3c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-3.7 .6-7.4 1.2-11.1 1.6c-5 .5-10.1 .9-15.3 1c-1.2 0-2.5 0-3.7 0l-.3 0c-96.8-.2-175.2-78.9-175.2-176c0-54.8 24.9-103.7 64.1-136c1-.9 2.1-1.7 3.2-2.6c4-3.2 8.2-6.2 12.5-9c3.1-2 6.3-4 9.6-5.8c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-3.6-.3-7.1-.5-10.7-.6c-2.7-.1-5.5-.1-8.2-.1c-3.3 0-6.5 .1-9.8 .2c-2.3 .1-4.6 .2-6.9 .4z"/>
                 </svg>`,
     }
-    
-    let darkTheme:boolean = false
+
     let browser:boolean = false
     
     export let applyOnBody:boolean = true
     export let horizontal:boolean = false
     export let preference:"light" | "dark" | "system" = "system"
+    $themeStore.useSystemTheme = preference === "system" ? true : false
     export let border:string = "solid 1px var(--color-text)"
     export let style:string=""
     export let backgroundColor:string = 'var(--color-bg-1)'
@@ -208,8 +212,7 @@
 
     $: checkCustomColors(customPropertyNames)
     let customColorErrors:number = 0
-    function checkCustomColors(customPropertyNames:{[key: string]: string})
-    {
+    function checkCustomColors(customPropertyNames:{[key: string]: string}) {
         customColorErrors = 0
         for (const key in customPropertyNames) {
             if (Object.prototype.hasOwnProperty.call(customPropertyNames, key)) {
@@ -252,12 +255,11 @@
             }
         }
 
-        darkTheme = mode === "dark" ? true : false
+        $themeStore.darkMode = mode === "dark" ? true : false
 
     }
 
     let systemTheme:string
-    let useSystemTheme:boolean = preference === "system" ? true : false
     $: if (browser && useSystemTheme) systemTheme === "dark" ? selectMode("dark") : selectMode("light")
 
 
@@ -311,8 +313,8 @@
     
 
     $: selectedBackgroundTransform = horizontal 
-        ? `transform: scaleX(0.33) translateX(${useSystemTheme ? "0%" : darkTheme ? "202%" : "101%"})`
-        : `transform: translateY(${useSystemTheme ? "0" : "101%"}) scaleX(${useSystemTheme ? "1" : "0.5"}) translateX(${!useSystemTheme && darkTheme ? "101%" : "0%"})`
+        ? `transform: scaleX(0.33) translateX(${useSystemTheme ? "0%" : darkMode ? "202%" : "101%"})`
+        : `transform: translateY(${useSystemTheme ? "0" : "101%"}) scaleX(${useSystemTheme ? "1" : "0.5"}) translateX(${!useSystemTheme && darkMode ? "101%" : "0%"})`
         
 </script>
     
@@ -334,19 +336,19 @@
                 height: {horizontal ? "100%" : "50%"};
                 "
     ></div>
-    <button on:click={() => {useSystemTheme = true}}
+    <button on:click={() => {$themeStore.useSystemTheme = true}}
         class="systemTheme" class:selected={useSystemTheme}
     >
         {@html osIcon}
     </button>
     <div class="themeSwitch" style="flex-direction: {osIcon === faIcons.faMobile ? "column" : "row"}" >
-        <button on:click={() => {useSystemTheme = false; selectMode("light")}}
-            class="systemTheme" class:selected={!useSystemTheme && !darkTheme}
+        <button on:click={() => {$themeStore.useSystemTheme = false; selectMode("light")}}
+            class="systemTheme" class:selected={!useSystemTheme && !darkMode}
         >
             {@html faIcons.faSun}
         </button>
-        <button on:click={() => {useSystemTheme = false; selectMode("dark")}}
-            class="systemTheme" class:selected={!useSystemTheme && darkTheme}
+        <button on:click={() => {$themeStore.useSystemTheme = false; selectMode("dark")}}
+            class="systemTheme" class:selected={!useSystemTheme && darkMode}
         >
             {@html faIcons.faMoon}
         </button>
