@@ -3,3 +3,4 @@
 
 </script>
 <ThemeSwitch fontSize="1rem"></ThemeSwitch>
+<ThemeSwitch fontSize="1rem"></ThemeSwitch>
