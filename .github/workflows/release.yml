@@ -27,7 +27,7 @@ jobs:
           node-version: "lts/*"
       - run: pnpm install
       - run: pnpm run package
-      - run: pnpm run audit
+      - run: pnpm audit
       - name: Release
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
