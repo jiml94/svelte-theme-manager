@@ -1,6 +1,6 @@
 {
   "name": "svelte-theme-manager",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "author": "Jorge Linares",
   "license": "MIT",
   "publishConfig": {
@@ -51,7 +51,7 @@
   "description": "A versatile Svelte component for effortlessly managing dark/light modes and custom color themes in your Svelte applications.",
   "repository": {
     "type": "git",
-    "url": "svelte-theme-manager"
+    "url": "git+https://github.com/urmoov-dev/svelte-theme-manager.git"
   },
   "keywords": [
     "svelte",
