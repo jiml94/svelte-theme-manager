@@ -1,0 +1,122 @@
+interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
+    new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
+        $$bindings?: Bindings;
+    } & Exports;
+    (internal: unknown, props: Props & {
+        $$events?: Events;
+        $$slots?: Slots;
+    }): Exports & {
+        $set?: any;
+        $on?: any;
+    };
+    z_$$bindings?: Bindings;
+}
+declare const ThemeSwitch: $$__sveltets_2_IsomorphicComponent<{
+    fontSize?: string;
+    padding?: string;
+    applyOnBody?: boolean;
+    horizontal?: boolean;
+    preference?: "light" | "dark" | "system";
+    border?: string;
+    style?: string;
+    backgroundColor?: string;
+    colors?: {
+        lightBg0?: string;
+        lightBg1?: string;
+        lightBg2?: string;
+        lightTheme1?: string;
+        lightTheme2?: string;
+        lightTextColor?: string;
+        lightTextColor1?: string;
+        lightTextColor2?: string;
+        lightTextColor3?: string;
+        lightLabelLink?: string;
+        lightRed?: string;
+        lightOrange?: string;
+        lightYellow?: string;
+        lightGreen?: string;
+        lightMint?: string;
+        lightTeal?: string;
+        lightCyan?: string;
+        lightBlue?: string;
+        lightIndigo?: string;
+        lightPurple?: string;
+        lightPink?: string;
+        lightBrown?: string;
+        lightGray?: string;
+        lightGray2?: string;
+        lightGray3?: string;
+        lightGray4?: string;
+        lightGray5?: string;
+        lightGray6?: string;
+        darkBg0?: string;
+        darkBg1?: string;
+        darkBg2?: string;
+        darkTheme1?: string;
+        darkTheme2?: string;
+        darkTextColor?: string;
+        darkTextColor1?: string;
+        darkTextColor2?: string;
+        darkTextColor3?: string;
+        darkLabelLink?: string;
+        darkRed?: string;
+        darkOrange?: string;
+        darkYellow?: string;
+        darkGreen?: string;
+        darkMint?: string;
+        darkTeal?: string;
+        darkCyan?: string;
+        darkBlue?: string;
+        darkIndigo?: string;
+        darkPurple?: string;
+        darkPink?: string;
+        darkBrown?: string;
+        darkGray?: string;
+        darkGray2?: string;
+        darkGray3?: string;
+        darkGray4?: string;
+        darkGray5?: string;
+        darkGray6?: string;
+    };
+    propertyNames?: {
+        Bg0?: string;
+        Bg1?: string;
+        Bg2?: string;
+        Theme1?: string;
+        Theme2?: string;
+        TextColor?: string;
+        TextColor1?: string;
+        TextColor2?: string;
+        TextColor3?: string;
+        LabelLink?: string;
+        Red?: string;
+        Orange?: string;
+        Yellow?: string;
+        Green?: string;
+        Mint?: string;
+        Teal?: string;
+        Cyan?: string;
+        Blue?: string;
+        Indigo?: string;
+        Purple?: string;
+        Pink?: string;
+        Brown?: string;
+        Gray?: string;
+        Gray2?: string;
+        Gray3?: string;
+        Gray4?: string;
+        Gray5?: string;
+        Gray6?: string;
+    };
+    customColors?: {
+        [key: `light${string}` | `dark${string}`]: string;
+    };
+    customPropertyNames?: {
+        [key: string]: string;
+    };
+    customOnly?: boolean;
+}, {
+    [evt: string]: CustomEvent<any>;
+}, {}, {}, string>;
+type ThemeSwitch = InstanceType<typeof ThemeSwitch>;
+export default ThemeSwitch;
