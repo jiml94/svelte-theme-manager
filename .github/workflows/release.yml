@@ -26,10 +26,10 @@ jobs:
         with:
           node-version: "lts/*"
       - run: pnpm install
-      - run: npm run package
-      - run: npm run audit signatures
+      - run: pnpm run package
+      - run: pnpm run audit
       - name: Release
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: npm publish
+        run: pnpm publish
