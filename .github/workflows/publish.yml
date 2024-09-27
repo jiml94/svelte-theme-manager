@@ -29,6 +29,17 @@ jobs:
       - run: pnpm install
       - run: pnpm run package
       - run: pnpm audit
-      - run: npm publish
-        env: 
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      
+      - name: Publish package to npm
+        id: publish
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{secrets.NPM_TOKEN}}
+
+      - name: Publish package to GitHub
+        id: publishgithub
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          registry: 'https://npm.pkg.github.com'
