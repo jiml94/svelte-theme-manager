@@ -17,6 +17,7 @@
     export let customPropertyNames:{[key: string]: string} = {};
     export let customOnly:boolean = false;
     export let development:boolean = false;
+    export let overrideDarkReader:boolean = true;
 
     // Reactive declarations
     $: ({ useSystemTheme, darkMode } = $themeStore);
@@ -143,7 +144,9 @@
 
     //Functions
     function selectMode(mode:"light"|"dark") {
-        if (applyOnBody) document.body.style.setProperty("background-color", backgroundColor)
+        if (applyOnBody) {
+            document.body.style.setProperty("background-color", backgroundColor)
+    }
         //avoid running default colors if explicitly required
         if (!customOnly) {
             for (const key in mergedPropertyNames) {
@@ -224,7 +227,7 @@
     onMount(() => {
         //signal to the rest of the component that it's mounted on the browser (instead of importing browser from $app/environment)
         browser = true;
-
+        if (overrideDarkReader) document.documentElement.style.filter = "invert(1) invert(1)"
         //define what icon to show for the system
         osIcon = detectOS();
 
@@ -282,7 +285,11 @@
         </button>
     </div>
 </div>
-
+<svelte:head>
+    {#if overrideDarkReader}    
+        <meta name="color-scheme" content="dark">
+    {/if}
+</svelte:head>
 
 <style>
     .themeSelector {
@@ -364,6 +371,7 @@
         -o-transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out;
         transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out;
     }
+    :global(:root) { color-scheme: light dark; }
     
     div, button {
         -webkit-box-sizing:border-box;
