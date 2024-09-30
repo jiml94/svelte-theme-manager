@@ -188,50 +188,60 @@
     }
     
     function detectOS() {
-        const userAgent = window.navigator.userAgent,
-            platform = (window.navigator as any).userAgentData?.platform || window.navigator.platform,
-            macosPlatforms = ['macOS', 'Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
-            windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-            iosPlatforms = ['iPhone', 'iPad', 'iPod'];
+        let userAgent = navigator.userAgent;
+        const platform = (navigator as any).userAgentData?.platform || navigator.platform;
+        
+        const macosPlatforms = ['macOS', 'Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+        const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
+        const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
         
         if (macosPlatforms.includes(platform)) return faIcons.faApple;
         if (iosPlatforms.includes(platform)) return faIcons.faMobile;
         if (windowsPlatforms.includes(platform)) return faIcons.faWindows;
         if (/Android/.test(userAgent)) return faIcons.faMobile;
         if (/Linux/.test(platform)) return faIcons.faLinux;
+
+        //fallback for userAgentData or platform lack of support
+        userAgent = navigator.userAgent.toLowerCase();
+
+        if (userAgent.indexOf("win") > -1) return faIcons.faWindows;
+        if (userAgent.indexOf("mac") > -1) return faIcons.faApple;
+        if (userAgent.indexOf("linux") > -1) return faIcons.faLinux;
+        if (userAgent.indexOf("android") > -1) return faIcons.faMobile;
+        if (userAgent.indexOf("iphone") > -1 || userAgent.indexOf("ipad") > -1) return faIcons.faMobile;
         
         return faIcons.faDesktop;
+    }
+    function sanitizeSVG(svg: string): string {
+        svg = svg.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        if (!svg.trim().startsWith('<svg')) return '';
+        return svg;
     }
 
     // Lyfecycle
     onMount(() => {
         //signal to the rest of the component that it's mounted on the browser (instead of importing browser from $app/environment)
-        browser = true
+        browser = true;
 
         //define what icon to show for the system
-        osIcon = detectOS()
+        osIcon = detectOS();
 
         //add event listener to dynamically switch the theme according to the system preference
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = (event:MediaQueryListEvent) => {
-            systemTheme = event.matches ? "dark" : "light"
-        }
+            systemTheme = event.matches ? "dark" : "light";
+        };
 
-        mediaQuery.addEventListener('change', handleChange)
-        systemTheme = mediaQuery.matches ? "dark" : "light"
+        mediaQuery.addEventListener('change', handleChange);
+        systemTheme = mediaQuery.matches ? "dark" : "light";
         
-        selectMode(preference === "system" ? systemTheme : preference)
+        selectMode(preference === "system" ? systemTheme : preference);
 
         return () => {
             mediaQuery.removeEventListener('change', handleChange);
         };
     })
 
-    
-    
-
-    
-        
 </script>
     
     
@@ -255,18 +265,18 @@
     <button on:click={() => {$themeStore.useSystemTheme = true}}
         class="systemTheme" class:selected={useSystemTheme}
     >
-        {@html osIcon}
+        {@html sanitizeSVG(osIcon)}
     </button>
     <div class="themeSwitch" style="flex-direction: {osIcon === faIcons.faMobile ? "column" : "row"}" >
         <button on:click={() => {$themeStore.useSystemTheme = false; selectMode("light")}}
             class="systemTheme" class:selected={!useSystemTheme && !darkMode}
         >
-            {@html faIcons.faSun}
+            {@html sanitizeSVG(faIcons.faSun)}
         </button>
         <button on:click={() => {$themeStore.useSystemTheme = false; selectMode("dark")}}
             class="systemTheme" class:selected={!useSystemTheme && darkMode}
         >
-            {@html faIcons.faMoon}
+            {@html sanitizeSVG(faIcons.faMoon)}
         </button>
     </div>
 </div>
