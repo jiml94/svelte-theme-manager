@@ -16,6 +16,7 @@
     export let customColors:{[key: `light${string}` | `dark${string}`]: string} = {};
     export let customPropertyNames:{[key: string]: string} = {};
     export let customOnly:boolean = false;
+    export let development:boolean = false;
 
     // Reactive declarations
     $: ({ useSystemTheme, darkMode } = $themeStore);
@@ -184,7 +185,7 @@
                 }
             }
         }
-        if (customColorErrors) alert(`There${customColorErrors === 1 ? "'s a problem": ` are ${customColorErrors} problems`}  with your custom color properties so they won't be set, check the console`)
+        if (customColorErrors && development) alert(`There${customColorErrors === 1 ? "'s a problem": ` are ${customColorErrors} problems`}  with your custom color properties so they won't be set, check the console`)
     }
     
     function detectOS() {
