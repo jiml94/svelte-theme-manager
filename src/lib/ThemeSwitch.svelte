@@ -3,115 +3,29 @@
     import {themeStore} from "./stores.js"
 
     // Props
-    export let fontSize:string = "0.6rem"
-    export let padding:string = `calc(${fontSize} / 3)`
-    export let applyOnBody:boolean = true
-    export let horizontal:boolean = false
-    export let preference:"light" | "dark" | "system" = "system"
-    export let border:string = "solid 1px var(--color-text)"
-    export let style:string=""
-    export let backgroundColor:string = 'var(--color-bg-1)'
-    export let colors:{
-        lightBg0?: string,
-        lightBg1?: string,
-        lightBg2?: string,
-        lightTheme1?: string,
-        lightTheme2?: string,
-        lightTextColor?: string,
-        lightTextColor1?: string,
-        lightTextColor2?: string,
-        lightTextColor3?: string,
-        lightLabelLink?: string,
-        lightRed?: string,
-        lightOrange?: string,
-        lightYellow?: string,
-        lightGreen?: string,
-        lightMint?: string,
-        lightTeal?: string,
-        lightCyan?: string,
-        lightBlue?: string,
-        lightIndigo?: string,
-        lightPurple?: string,
-        lightPink?: string,
-        lightBrown?: string,
-        lightGray?: string,
-        lightGray2?: string,
-        lightGray3?: string,
-        lightGray4?: string,
-        lightGray5?: string,
-        lightGray6?: string,
-        darkBg0?: string,
-        darkBg1?: string,
-        darkBg2?: string,
-        darkTheme1?: string,
-        darkTheme2?: string,
-        darkTextColor?: string,
-        darkTextColor1?: string,
-        darkTextColor2?: string,
-        darkTextColor3?: string,
-        darkLabelLink?: string,
-        darkRed?: string,
-        darkOrange?: string,
-        darkYellow?: string,
-        darkGreen?: string,
-        darkMint?: string,
-        darkTeal?: string,
-        darkCyan?: string,
-        darkBlue?: string,
-        darkIndigo?: string,
-        darkPurple?: string,
-        darkPink?: string,
-        darkBrown?: string,
-        darkGray?: string,
-        darkGray2?: string,
-        darkGray3?: string,
-        darkGray4?: string,
-        darkGray5?: string,
-        darkGray6?: string
-    } = {}
-    export let propertyNames:{
-        Bg0?: string,
-        Bg1?: string,
-        Bg2?: string,
-        Theme1?: string,
-        Theme2?: string,
-        TextColor?: string,
-        TextColor1?: string,
-        TextColor2?: string,
-        TextColor3?: string,
-        LabelLink?: string,
-        Red?: string,
-        Orange?: string,
-        Yellow?: string,
-        Green?: string,
-        Mint?: string,
-        Teal?: string,
-        Cyan?: string,
-        Blue?: string,
-        Indigo?: string,
-        Purple?: string,
-        Pink?: string,
-        Brown?: string,
-        Gray?: string,
-        Gray2?: string,
-        Gray3?: string,
-        Gray4?: string,
-        Gray5?: string,
-        Gray6?: string
-    } = {}
-    export let customColors:{[key: `light${string}` | `dark${string}`]: string} = {}
-    export let customPropertyNames:{[key: string]: string} = {}
-    export let customOnly:boolean = false
+    export let fontSize:string = "0.6rem";
+    export let padding:string = `calc(${fontSize} / 3)`;
+    export let applyOnBody:boolean = true;
+    export let horizontal:boolean = false;
+    export let preference:"light" | "dark" | "system" = "system";
+    export let border:string = "solid 1px var(--color-text)";
+    export let style:string="";
+    export let backgroundColor:string = 'var(--color-bg-1)';
+    export let colors: Partial<typeof defaultColors> = {};
+    export let propertyNames: Partial<typeof defaultPropertyNames> = {};
+    export let customColors:{[key: `light${string}` | `dark${string}`]: string} = {};
+    export let customPropertyNames:{[key: string]: string} = {};
+    export let customOnly:boolean = false;
 
     // Reactive declarations
-    $: ({useSystemTheme, darkMode} = $themeStore)
-    $: mergedColors = {...defaultColors, ...colors}
-    $: mergedPropertyNames = {...defaultPropertyNames, ...propertyNames}
-    $: checkCustomColors(customPropertyNames)
-    $: if (browser && useSystemTheme) systemTheme === "dark" ? selectMode("dark") : selectMode("light")
+    $: ({ useSystemTheme, darkMode } = $themeStore);
+    $: mergedColors = {...defaultColors, ...colors};
+    $: mergedPropertyNames = {...defaultPropertyNames, ...propertyNames};
+    $: checkCustomColors(customPropertyNames);
+    $: if (browser && useSystemTheme) systemTheme === "dark" ? selectMode("dark") : selectMode("light");
     $: selectedBackgroundTransform = horizontal 
         ? `transform: scaleX(0.33) translateX(${useSystemTheme ? "0%" : darkMode ? "202%" : "101%"})`
-        : `transform: translateY(${useSystemTheme ? "0" : "101%"}) scaleX(${useSystemTheme ? "1" : "0.5"}) translateX(${!useSystemTheme && darkMode ? "101%" : "0%"})`
+        : `transform: translateY(${useSystemTheme ? "0" : "101%"}) scaleX(${useSystemTheme ? "1" : "0.5"}) translateX(${!useSystemTheme && darkMode ? "101%" : "0%"})`;
     $: faIcons = {
         faWindows: `<svg fill="var(--color-text)" height="${fontSize}"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/></svg>`,
         faApple: `<svg fill="var(--color-text)" height="${fontSize}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`,
@@ -122,16 +36,16 @@
                 </svg>`,
         faMoon: `<svg fill="var(--color-text)" xmlns="http://www.w3.org/2000/svg" height=${fontSize} viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M144.7 98.7c-21 34.1-33.1 74.3-33.1 117.3c0 98 62.8 181.4 150.4 211.7c-12.4 2.8-25.3 4.3-38.6 4.3C126.6 432 48 353.3 48 256c0-68.9 39.4-128.4 96.8-157.3zm62.1-66C91.1 41.2 0 137.9 0 256C0 379.7 100 480 223.5 480c47.8 0 92-15 128.4-40.6c1.9-1.3 3.7-2.7 5.5-4c4.8-3.6 9.4-7.4 13.9-11.4c2.7-2.4 5.3-4.8 7.9-7.3c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-3.7 .6-7.4 1.2-11.1 1.6c-5 .5-10.1 .9-15.3 1c-1.2 0-2.5 0-3.7 0l-.3 0c-96.8-.2-175.2-78.9-175.2-176c0-54.8 24.9-103.7 64.1-136c1-.9 2.1-1.7 3.2-2.6c4-3.2 8.2-6.2 12.5-9c3.1-2 6.3-4 9.6-5.8c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-3.6-.3-7.1-.5-10.7-.6c-2.7-.1-5.5-.1-8.2-.1c-3.3 0-6.5 .1-9.8 .2c-2.3 .1-4.6 .2-6.9 .4z"/>
                 </svg>`,
-    }
+    };
 
     // Local state
-    let browser:boolean = false
-    let systemTheme:string
-    let osIcon:string
-    let themeSelectorElement:HTMLElement
-    let themeSelectorHeight:number
-    let themeSelectorWidth:number
-    let customColorErrors:number = 0
+    let browser:boolean = false;
+    let systemTheme:"light" | "dark";
+    let osIcon:string;
+    let themeSelectorElement:HTMLElement;
+    let themeSelectorHeight:number;
+    let themeSelectorWidth:number;
+    let customColorErrors:number = 0;
 
     $themeStore.useSystemTheme = preference === "system" ? true : false
     
@@ -226,11 +140,7 @@
         Gray6: "--color-gray-6",
     }
 
-    
-    
-
-    
-    
+    //Functions
     function selectMode(mode:"light"|"dark") {
         if (applyOnBody) document.body.style.setProperty("background-color", backgroundColor)
         //avoid running default colors if explicitly required
@@ -253,7 +163,7 @@
             }
         }
 
-        $themeStore.darkMode = mode === "dark" ? true : false
+        $themeStore.darkMode = mode === "dark"
 
     }
 
@@ -283,21 +193,14 @@
             macosPlatforms = ['macOS', 'Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
             windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
             iosPlatforms = ['iPhone', 'iPad', 'iPod'];
-        let os:string = faIcons.faDesktop
-
-        if (macosPlatforms.indexOf(platform) !== -1) {
-            os = faIcons.faApple;
-        } else if (iosPlatforms.indexOf(platform) !== -1) {
-            os = faIcons.faMobile;
-        } else if (windowsPlatforms.indexOf(platform) !== -1) {
-            os = faIcons.faWindows;
-        } else if (/Android/.test(userAgent)) {
-            os = faIcons.faMobile;
-        } else if (/Linux/.test(platform)) {
-            os = faIcons.faLinux;
-        }
-
-        return os;
+        
+        if (macosPlatforms.includes(platform)) return faIcons.faApple;
+        if (iosPlatforms.includes(platform)) return faIcons.faMobile;
+        if (windowsPlatforms.includes(platform)) return faIcons.faWindows;
+        if (/Android/.test(userAgent)) return faIcons.faMobile;
+        if (/Linux/.test(platform)) return faIcons.faLinux;
+        
+        return faIcons.faDesktop;
     }
 
     // Lyfecycle
@@ -309,15 +212,19 @@
         osIcon = detectOS()
 
         //add event listener to dynamically switch the theme according to the system preference
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            systemTheme = event.matches ? "dark" : "light";
-        })
-        systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light"
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        const handleChange = (event:MediaQueryListEvent) => {
+            systemTheme = event.matches ? "dark" : "light"
+        }
 
-        //set the theme according to the preference prop
-        preference === "light" ? selectMode("light") :
-        preference === "dark" ? selectMode("dark") :
-        systemTheme === "dark" ? selectMode("dark") : selectMode("light")
+        mediaQuery.addEventListener('change', handleChange)
+        systemTheme = mediaQuery.matches ? "dark" : "light"
+        
+        selectMode(preference === "system" ? systemTheme : preference)
+
+        return () => {
+            mediaQuery.removeEventListener('change', handleChange);
+        };
     })
 
     
