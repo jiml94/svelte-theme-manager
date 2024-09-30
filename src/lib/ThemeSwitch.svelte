@@ -214,6 +214,7 @@
         return faIcons.faDesktop;
     }
     function sanitizeSVG(svg: string): string {
+        if (!svg) return svg
         svg = svg.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
         if (!svg.trim().startsWith('<svg')) return '';
         return svg;
